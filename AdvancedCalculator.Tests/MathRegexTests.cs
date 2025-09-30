@@ -7,9 +7,10 @@ public class MathRegexTests
     [InlineData("-(2+3)")]
     [InlineData("42")]
     [InlineData("-123")]
-    [InlineData("(sin(90))")]
+    [InlineData("sin(90)")]
+    [InlineData("cbrt(sqrt(81))")]
     [InlineData("3+((2*5)-7)+2")]
-    [InlineData("-((tan(0.01)+2)*(3-acot(9999991123456785234567420.699999999999999999999999999999)))^2.2/cos(5)")]
+    [InlineData("-cbrt(27)*((tan(0.01)+2)*(3-sqrt(acot(9999991123456785234567420.699999999999999999999999999999))))^2.2/cos(5)")]
     public void ValidExpressions_ReturnTrue(string expr)
     {
         Assert.True(MathSyntaxValidator.IsSimpleExpression(expr));
