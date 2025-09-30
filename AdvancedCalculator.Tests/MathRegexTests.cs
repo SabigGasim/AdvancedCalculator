@@ -22,6 +22,10 @@ public class MathRegexTests
     [InlineData("(1+2")]       // unbalanced parentheses
     [InlineData("1+2)")]       // unbalanced parentheses
     [InlineData(")1+2(")]      // balanced but starts with closing bracket
+    [InlineData("()")]         // parentheses are empty
+    [InlineData("( )")]        // parentheses are empty
+    [InlineData("(  )")]       // parentheses are empty
+    [InlineData("5+()")]       // parentheses are empty
     [InlineData("+5")]         // starts with +
     [InlineData("*5")]         // starts with *
     [InlineData("/5")]         // starts with /
