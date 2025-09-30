@@ -8,7 +8,7 @@ public class MathRegexTests
     [InlineData("42")]
     [InlineData("-123")]
     [InlineData("3+((2*5)-7)+2")]
-    [InlineData("-((1+2)*(3-420.69))^2.2/5")]
+    [InlineData("-((0.01+2)*(3-9999991123456785234567420.699999999999999999999999999999))^2.2/5")]
     public void ValidExpressions_ReturnTrue(string expr)
     {
         Assert.True(MathSyntaxValidator.IsSimpleExpression(expr));

@@ -10,11 +10,13 @@ public partial class MathSyntaxValidator
 
     public static bool IsSimpleExpression([NotNullWhen(true)] string? input)
     {
-        if (!SimpleMathExpression().IsMatch(input ?? ""))
-        {
-            return false;
-        }
+        return SimpleMathExpression().IsMatch(input ?? "")
+            && AllOpenParenthesesAreClosed(input!)
+            && AllNumbersAreValidDoubles(input!);
+    }
 
+    private static bool AllOpenParenthesesAreClosed(string input)
+    {
         int openParanthesesNumber = 0;
 
         for (int i = 0; i < input!.Length; i++)
@@ -33,5 +35,20 @@ public partial class MathSyntaxValidator
         }
 
         return openParanthesesNumber == 0;
+    }
+
+    private static bool AllNumbersAreValidDoubles(string input)
+    {
+        var numbersList = input!.Split(['(', ')', '+', '-', '*', '^', '/'], StringSplitOptions.RemoveEmptyEntries);
+        
+        foreach (var number in numbersList)
+        {
+            if (!double.TryParse(number, out _))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
