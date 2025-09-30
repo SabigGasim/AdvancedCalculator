@@ -7,8 +7,9 @@ public class MathRegexTests
     [InlineData("-(2+3)")]
     [InlineData("42")]
     [InlineData("-123")]
+    [InlineData("(sin(90))")]
     [InlineData("3+((2*5)-7)+2")]
-    [InlineData("-((0.01+2)*(3-9999991123456785234567420.699999999999999999999999999999))^2.2/5")]
+    [InlineData("-((tan(0.01)+2)*(3-acot(9999991123456785234567420.699999999999999999999999999999)))^2.2/cos(5)")]
     public void ValidExpressions_ReturnTrue(string expr)
     {
         Assert.True(MathSyntaxValidator.IsSimpleExpression(expr));
@@ -22,6 +23,7 @@ public class MathRegexTests
     [InlineData("3^^2")]       // duplicate ^
     [InlineData("3..2")]       // duplicate .
     [InlineData("3.+(5)")]     // dot followed by operator 
+    [InlineData("3.(5)")]      // dot followed by brackets
     [InlineData("3+.5")]       // dot peceeded by operator 
     [InlineData("2*/3")]       // invalid operator sequence
     [InlineData("123-")]       // trailing operator
@@ -47,6 +49,7 @@ public class MathRegexTests
     [InlineData("5%2")]        // invalid operators
     [InlineData("5@2")]        // invalid operators
     [InlineData("5#2")]        // invalid operators
+    [InlineData("sin50")]      // trig function without brackets
     [InlineData("")]           // empty string
     [InlineData(null)]         // null
     public void InvalidExpressions_ReturnFalse(string? expr)

@@ -5,17 +5,17 @@ namespace AdvancedCalculator;
 
 public partial class MathSyntaxValidator
 {
-    [GeneratedRegex(@"^-?(?:\d+(?:\.\d+)?|\((?:\d+(?:\.\d+)?|\([^()]*\))(?:[+\-/*^](?:\d+(?:\.\d+)?|\([^()]*\)))*\))(?:[+\-/*^](?:\d+(?:\.\d+)?|\((?:\d+(?:\.\d+)?|\([^()]*\))(?:[+\-/*^](?:\d+(?:\.\d+)?|\([^()]*\)))*\)))*$")]
+    [GeneratedRegex(@"^-?(?:\d+(?:\.\d+)?|(?:(?:a?(?:sin|cos|tan|csc|sec|cot)))?\(\s*[^+\/*^\s].*?\s*\))(?:[+\-/*^](?:\d+(?:\.\d+)?|(?:(?:a?(?:sin|cos|tan|csc|sec|cot)))?\(\s*[^+\/*^\s].*?\s*\)))*$")]
     private static partial Regex SimpleMathExpression();
 
     public static bool IsSimpleExpression([NotNullWhen(true)] string? input)
     {
         return SimpleMathExpression().IsMatch(input ?? "")
-            && AllOpenParenthesesAreClosed(input!)
+            && AllOpenParenthesesAreBalanced(input!)
             && AllNumbersAreValidDoubles(input!);
     }
 
-    private static bool AllOpenParenthesesAreClosed(string input)
+    private static bool AllOpenParenthesesAreBalanced(string input)
     {
         int openParanthesesNumber = 0;
 
@@ -39,7 +39,7 @@ public partial class MathSyntaxValidator
 
     private static bool AllNumbersAreValidDoubles(string input)
     {
-        var numbersList = input!.Split(['(', ')', '+', '-', '*', '^', '/'], StringSplitOptions.RemoveEmptyEntries);
+        var numbersList = input!.Split([..Helpers.Alphabet, ..Helpers.Operators], StringSplitOptions.RemoveEmptyEntries);
         
         foreach (var number in numbersList)
         {
