@@ -5,7 +5,7 @@ namespace AdvancedCalculator;
 
 public partial class MathSyntaxValidator
 {
-    [GeneratedRegex(@"^-?(?:\d+|\((?:\d+|\([^()]*\))(?:[+\-/*^](?:\d+|\([^()]*\)))*\))(?:[+\-/*^](?:\d+|\((?:\d+|\([^()]*\))(?:[+\-/*^](?:\d+|\([^()]*\)))*\)))*$")]
+    [GeneratedRegex(@"^-?(?:\d+(?:\.\d+)?|\((?:\d+(?:\.\d+)?|\([^()]*\))(?:[+\-/*^](?:\d+(?:\.\d+)?|\([^()]*\)))*\))(?:[+\-/*^](?:\d+(?:\.\d+)?|\((?:\d+(?:\.\d+)?|\([^()]*\))(?:[+\-/*^](?:\d+(?:\.\d+)?|\([^()]*\)))*\)))*$")]
     private static partial Regex SimpleMathExpression();
 
     public static bool IsSimpleExpression([NotNullWhen(true)] string? input)
